@@ -16,7 +16,10 @@ import Code, {
    nav,
    NotFound,
    BlogCode,
-   cartCode
+   cartCode,
+   navCode,
+   PostCode,
+   appCode
 } from './syntaxHighligher/code';
 
 const initial = {
@@ -105,6 +108,15 @@ const Nav = () => {
                }`}>
                NavCode
             </Link>
+            <Link
+               to='/app'
+               className={`text-xl ${
+                  pathname === '/app'
+                     ? 'font-bold border-b-4 border-indigo-600'
+                     : ''
+               }`}>
+               AppCode
+            </Link>
          </div>
          <div className='mr-10'>
             {isLogged && (
@@ -123,18 +135,6 @@ const NavCode: React.FC = () => {
    return (
       <div className='w-11/12  mt-40'>
          <Code code={nav} language='javascript' />
-      </div>
-   );
-};
-
-const Blog: React.FC = () => {
-   let { slug } = useParams<{ slug: string }>();
-   return (
-      <div className='h-screen w-11/12'>
-         <h1 className='text-xl text-gray-50 '>{slug}</h1>;
-         <div className='  mt-40'>
-            <Code code={BlogCode} language='javascript' />
-         </div>
       </div>
    );
 };
@@ -188,10 +188,27 @@ const DashBoard: React.FC = () => {
 const Post: React.FC<any> = ({ other }: any) => {
    let { slug } = useParams<{ slug: string }>();
    return (
-      <h1 className='text-xl'>
-         {slug}
-         {other}
-      </h1>
+      <div className='h-screen  mt-20 flex flex-col justify-center items-center w-screen'>
+         <h1 className='text-xl'>
+            {slug}
+            {other}
+         </h1>
+         <div className='mt-20 w-11/12'>
+            <Code code={PostCode} language='javascript' />
+         </div>
+      </div>
+   );
+};
+
+const Blog: React.FC = () => {
+   let { slug } = useParams<{ slug: string }>();
+   return (
+      <div className='h-screen w-screen mt-10 flex flex-col items-center justify-center'>
+         <h1 className='text-xl '>{slug}</h1>;
+         <div className=' mt-4 w-11/12'>
+            <Code code={BlogCode} language='javascript' />
+         </div>
+      </div>
    );
 };
 
@@ -249,7 +266,7 @@ const Login = () => {
    }, [isLogged]);
 
    return (
-      <div className='h-screen bg-gray-100 flex flex-col w-full justify-center items-center space-y-5 mt-32'>
+      <div className=' bg-gray-100 flex flex-col w-full justify-center items-center space-y-5 mt-32'>
          <div>
             <form className='w-2/5 space-y-4' onSubmit={submit}>
                <button className='bg-indigo-500 px-4 py-2 rounded shadow focus:outline-none hover:bg-indigo-400 text-gray-50'>
@@ -262,7 +279,7 @@ const Login = () => {
             <h1>REDIRECT: {reDirect}</h1>
          </div>
          <div className=' w-11/12'>
-            <Code code={cartCode} language='javascript' />
+            <Code code={navCode} language='javascript' />
          </div>
       </div>
    );
@@ -285,6 +302,18 @@ const Payment = () => {
          </div>
          <div>
             <h1>price : ${price}</h1>
+         </div>
+      </div>
+   );
+};
+
+const AppCode: React.FC = () => {
+   let { slug } = useParams<{ slug: string }>();
+   return (
+      <div className='w-screen mt-32 flex flex-col items-center justify-center'>
+         <h1 className='text-xl '>{slug}</h1>;
+         <div className=' mt-4 w-11/12'>
+            <Code code={appCode} language='javascript' />
          </div>
       </div>
    );
@@ -318,6 +347,9 @@ function App() {
                      </Route>
                      <Route path='/login' exact>
                         <Login />
+                     </Route>
+                     <Route path='/app' exact>
+                        <AppCode />
                      </Route>
                      <Route path='*' exact>
                         {() => (
