@@ -283,7 +283,6 @@ const Payment = () => {
                CHECKOUT
             </button>
          </div>
-
          <div>
             <h1>price : ${price}</h1>
          </div>
