@@ -7,7 +7,8 @@ module.exports = {
       colors: {
          gray: colors.trueGray,
          cyan: colors.cyan,
-         teal: colors.teal
+         teal: colors.teal,
+         indigo: colors.indigo
       },
       fontFamily: {
          sans: ['Nunito', 'sans-serif'],

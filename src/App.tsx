@@ -61,24 +61,26 @@ const Nav = () => {
    };
 
    return (
-      <div className='fixed bg-gray-200 h-16 flex items-center w-full shadow-md'>
-         <div className='space-x-4 ml-5'>
-            <Link
-               to='/login'
-               className={`text-xl ${
-                  pathname === '/login'
-                     ? 'font-bold border-b-4 border-teal-600'
-                     : ''
-               }`}>
-               Login
-            </Link>
+      <div className='fixed bg-gray-200 h-16 flex items-center w-full shadow-md justify-between'>
+         <div className='space-x-5 ml-10'>
+            {!isLogged && (
+               <Link
+                  to='/login'
+                  className={`text-xl ${
+                     pathname === '/login'
+                        ? 'font-bold border-b-4 border-indigo-600'
+                        : ''
+                  }`}>
+                  Login
+               </Link>
+            )}
 
             {isLogged && (
                <Link
                   to='/dashboard'
                   className={`text-xl ${
                      pathname === '/dashboard'
-                        ? 'font-bold border-b-4 border-teal-600'
+                        ? 'font-bold border-b-4 border-indigo-600'
                         : ''
                   }`}>
                   Dashboard
@@ -89,7 +91,7 @@ const Nav = () => {
                to='/cart'
                className={`text-xl ${
                   pathname === '/cart'
-                     ? 'font-bold border-b-4 border-teal-600'
+                     ? 'font-bold border-b-4 border-indigo-600'
                      : ''
                }`}>
                Cart
@@ -98,15 +100,16 @@ const Nav = () => {
                to='/nav'
                className={`text-xl ${
                   pathname === '/nav'
-                     ? 'font-bold border-b-4 border-teal-600'
+                     ? 'font-bold border-b-4 border-indigo-600'
                      : ''
                }`}>
                NavCode
             </Link>
-
+         </div>
+         <div className='mr-10'>
             {isLogged && (
                <button
-                  className=' bg-teal-300 px-4 py-2 rounded shadow-md hover:bg-teal-400'
+                  className=' bg-indigo-500 px-4 py-2 rounded shadow-md hover:bg-indigo-400 text-gray-50'
                   onClick={logout}>
                   LOGOUT
                </button>
@@ -155,7 +158,7 @@ const DashBoard: React.FC = () => {
             onSubmit={submit}
             className=' space-y-4 mt-20 w-1/3 flex flex-col'>
             <input
-               className='border-teal-500 border-2 rounded-lg w-full focus:ring-teal-700 focus:border-teal-700 bg-gray-50'
+               className='border-indigo-500 border-2 rounded-lg w-full focus:ring-indigo-700 focus:border-indigo-700 bg-gray-50'
                type='text'
                placeholder='Enter blog/:params or post/:param'
                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -164,13 +167,13 @@ const DashBoard: React.FC = () => {
             />
             <button
                type='submit'
-               className='bg-teal-300 px-4 py-2 rounded-md shadow hover:bg-teal-400 focus:outline-none'>
+               className='bg-indigo-500 px-4 py-2 rounded-md shadow hover:bg-indigo-400 focus:outline-none text-gray-50'>
                GO TO
             </button>
          </form>
          <div className='w-1/3'>
             <button
-               className='bg-teal-300 px-4 py-2 rounded-md shadow hover:bg-teal-400 focus:outline-none w-full'
+               className='bg-indigo-500 px-4 py-2 rounded-md shadow hover:bg-indigo-400 focus:outline-none w-full text-gray-50'
                onClick={logout}>
                LOGOUT
             </button>
@@ -201,7 +204,7 @@ const Cart: React.FC = () => {
    return (
       <div className='h-screen w-11/12 mt-40 space-y-4 flex flex-col items-center'>
          <button
-            className='bg-teal-300 px-4 py-2 rounded-md shadow focus:outline-none mb-10 w-40 font-bold'
+            className='bg-indigo-500 px-4 py-2 rounded-md shadow focus:outline-none mb-10 w-40 text-gray-50'
             onClick={onclick}>
             BUY NOW
          </button>
@@ -214,7 +217,7 @@ const Cart: React.FC = () => {
                />
             </div>
             <div>
-               <h1 className='text-3xl font-bold'> AirPods Max</h1>
+               <h1 className='text-3xl font-bold '> AirPods Max</h1>
             </div>
          </div>
 
@@ -246,14 +249,44 @@ const Login = () => {
    }, [isLogged]);
 
    return (
-      <div className='h-screen bg-gray-100 flex mt-40 flex-col w-full justify-center items-center'>
-         <form className='w-2/5 space-y-4' onSubmit={submit}>
-            <button className='bg-cyan-300 px-4 py-2 rounded shadow focus:outline-none hover:bg-cyan-500'>
-               LOGIN
+      <div className='h-screen bg-gray-100 flex flex-col w-full justify-center items-center space-y-5 mt-32'>
+         <div>
+            <form className='w-2/5 space-y-4' onSubmit={submit}>
+               <button className='bg-indigo-500 px-4 py-2 rounded shadow focus:outline-none hover:bg-indigo-400 text-gray-50'>
+                  LOGIN
+               </button>
+            </form>
+         </div>
+         <div>
+            <h1>LOCATION: {location.search}</h1>
+            <h1>REDIRECT: {reDirect}</h1>
+         </div>
+         <div className=' w-11/12'>
+            <Code code={cartCode} language='javascript' />
+         </div>
+      </div>
+   );
+};
+
+const Payment = () => {
+   const price = location.search ? location.search.split(':')[1] : '';
+   const history = useHistory();
+   const checkout = () => {
+      history.push('/dashboard');
+   };
+   return (
+      <div className='bg-gray-100 h-screen flex justify-center items-center flex-col space-y-4'>
+         <div>
+            <button
+               className=' bg-indigo-500 px-4 py-2 rounded-md hover:bg-indigo-600 text-gray-50 shadow-md focus:outline-none'
+               onClick={checkout}>
+               CHECKOUT
             </button>
-         </form>
-         <h1>LOCATION: {location.search}</h1>
-         <h1>REDIRECT?: {reDirect}</h1>
+         </div>
+
+         <div>
+            <h1>price : ${price}</h1>
+         </div>
       </div>
    );
 };
@@ -274,6 +307,9 @@ function App() {
                      </Route>
                      <PrivateRoute path='/dashboard' exact>
                         <DashBoard />
+                     </PrivateRoute>
+                     <PrivateRoute path='/payment' exact>
+                        <Payment />
                      </PrivateRoute>
                      <Route path='/nav' exact>
                         <NavCode />
