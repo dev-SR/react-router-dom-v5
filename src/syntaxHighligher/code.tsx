@@ -240,6 +240,41 @@ const Post: React.FC<any> = ({ other }: any) => {
 
 `;
 export const appCode = `
+const initial = {
+   isLogged: false,
+   Logout: () => {},
+   Login: () => {}
+};
+const AuthContext = React.createContext(initial);
+const AuthProvider: React.FC = ({ children }) => {
+   const [isLogged, setIsLogged] = useState(false);
+   return (
+      <AuthContext.Provider
+         value={{
+            isLogged: isLogged,
+            Logout: () => setIsLogged(false),
+            Login: () => setIsLogged(true)
+         }}>
+         {children}
+      </AuthContext.Provider>
+   );
+};
+
+const PrivateRoute: React.FC<RouteProps> = ({ ...routeProps }) => {
+   const { isLogged } = useContext(AuthContext);
+   if (isLogged) {
+      return <Route {...routeProps} />;
+   } else {
+      return (
+         <Redirect
+            to={{
+               pathname: '/login'
+            }}
+         />
+      );
+   }
+};
+
 function App() {
    return (
       <div className='bg-gray-100'>
