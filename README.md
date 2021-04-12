@@ -8,4 +8,4 @@
 
 > 2
 
-![image2](img/img1.png)
+![image2](img/img2.png)
