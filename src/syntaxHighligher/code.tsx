@@ -240,6 +240,18 @@ const Post: React.FC<any> = ({ other }: any) => {
 
 `;
 export const appCode = `
+import {
+   BrowserRouter as Router,
+   Route,
+   useParams,
+   Link,
+   useHistory,
+   useLocation,
+   Switch,
+   Redirect,
+   RouteProps
+} from 'react-router-dom';
+
 const initial = {
    isLogged: false,
    Logout: () => {},
